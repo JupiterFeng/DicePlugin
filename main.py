@@ -18,31 +18,43 @@ class MyPlugin(BasePlugin):
     @handler(PersonNormalMessageReceived)
     async def person_normal_message_received(self, ctx: EventContext):
         msg = ctx.event.text_message  # 这里的 event 即为 PersonNormalMessageReceived 的对象
-        if msg == "hello":  # 如果消息为hello
+        if msg.startswith(".d"):
+            import re
+            match = re.match(r"\.d(\d+)(?:r(\d+))?", msg)
+            if match:
+                sides = int(match.group(1))
+                rolls = int(match.group(2)) if match.group(2) else 1
+                results = [str(random.randint(1, sides)) for _ in range(rolls)]
+                reply = ", ".join(results)
+                # # 输出调试信息
+                # self.ap.logger.debug(f"Rolling {rolls}d{sides} for {ctx.event.sender_id}: {reply}")
 
-            # 输出调试信息
-            self.ap.logger.debug("hello, {}".format(ctx.event.sender_id))
+                # 回复消息
+                ctx.add_return("reply", [f"{reply}"])
 
-            # 回复消息 "hello, <发送者id>!"
-            ctx.add_return("reply", ["hello, {}!".format(ctx.event.sender_id)])
-
-            # 阻止该事件默认行为（向接口获取回复）
-            ctx.prevent_default()
+                # 阻止该事件默认行为（向接口获取回复）
+                ctx.prevent_default()
 
     # 当收到群消息时触发
     @handler(GroupNormalMessageReceived)
     async def group_normal_message_received(self, ctx: EventContext):
         msg = ctx.event.text_message  # 这里的 event 即为 GroupNormalMessageReceived 的对象
-        if msg == "hello":  # 如果消息为hello
+        if msg.startswith(".d"):
+            import re
+            match = re.match(r"\.d(\d+)(?:r(\d+))?", msg)
+            if match:
+                sides = int(match.group(1))
+                rolls = int(match.group(2)) if match.group(2) else 1
+                results = [str(random.randint(1, sides)) for _ in range(rolls)]
+                reply = ", ".join(results)
+                # # 输出调试信息
+                # self.ap.logger.debug(f"Rolling {rolls}d{sides} for {ctx.event.sender_id}: {reply}")
 
-            # 输出调试信息
-            self.ap.logger.debug("hello, {}".format(ctx.event.sender_id))
+                # 回复消息
+                ctx.add_return("reply", [f"{reply}"])
 
-            # 回复消息 "hello, everyone!"
-            ctx.add_return("reply", ["hello, everyone!"])
-
-            # 阻止该事件默认行为（向接口获取回复）
-            ctx.prevent_default()
+                # 阻止该事件默认行为（向接口获取回复）
+                ctx.prevent_default()
 
     # 插件卸载时触发
     def __del__(self):
