@@ -56,24 +56,6 @@ class MyPlugin(BasePlugin):
 
                 # 阻止该事件默认行为（向接口获取回复）
                 ctx.prevent_default()
-        if msg == "查尔斯":
-            ctx.add_return("reply", ["今晚八点"])
-            ctx.prevent_default()
-        if msg == "机师":
-            ctx.add_return("reply", ["死刑"])
-            ctx.prevent_default()
-        if msg == "147":
-            ctx.add_return("reply", ["查尔斯来我就来"])
-            ctx.prevent_default()
-        if msg == "煎包":
-            ctx.add_return("reply", ["147来我就来"])
-            ctx.prevent_default()
-        if msg == "老白":
-            ctx.add_return("reply", ["兵呢？星呢？塔呢？"])
-            ctx.prevent_default()
-        if msg == "Licc":
-            ctx.add_return("reply", ["我要波你嘴了"])
-            ctx.prevent_default()
 
     # 插件卸载时触发
     def __del__(self):
